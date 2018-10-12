@@ -2,7 +2,7 @@
     "name": "vaalyn/authentication-service",
     "description": "An authentication service for the Slim Framework 3 using the Eloquent ORM",
 	"keywords": ["authentication", "service", "slim", "eloquent"],
-	"homepage": "https://github.com/Vaalyn/plugin-service",
+	"homepage": "https://github.com/Vaalyn/authentication-service",
     "type": "library",
     "license": "Apache-2.0",
     "authors": [
