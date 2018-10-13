@@ -23,9 +23,9 @@ class AuthenticationUserTransformer {
 			$authenticationUserObjectValidator->validate($user);
 		} catch (NestedValidationException $exception) {
 			$excpetionMessage = sprintf(
-				'User validation for %s failed because of the following reasons:',
+				'User validation for %s failed because of the following reasons: %s',
 				self::class,
-				implode(PHP_EOL, $exception->getMessages())
+				implode(', ', $exception->getMessages())
 			);
 
 			throw new UserValidationFailedException($excpetionMessage);
