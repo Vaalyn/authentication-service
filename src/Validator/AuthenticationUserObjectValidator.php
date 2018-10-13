@@ -15,7 +15,7 @@ class AuthenticationUserObjectValidator implements AuthenticationUserObjectValid
 		Validator::attribute('user_id', Validator::intType())
 			->attribute('username', Validator::stringType())
 			->attribute('email', Validator::stringType())
-			->attribute('isAdmin', Validator::boolVal())
+			->attribute('is_admin', Validator::boolVal())
 			->assert($user);
 	}
 }

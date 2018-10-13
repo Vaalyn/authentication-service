@@ -5,7 +5,9 @@ declare(strict_types = 1);
 namespace Vaalyn\AuthenticationService\Transformer;
 
 use stdClass;
+use Respect\Validation\Exceptions\NestedValidationException;
 use Vaalyn\AuthenticationService\AuthenticationUser;
+use Vaalyn\AuthenticationService\Exception\UserValidationFailedException;
 use Vaalyn\AuthenticationService\Validator\AuthenticationUserObjectValidator;
 
 class AuthenticationUserTransformer {
@@ -16,7 +18,18 @@ class AuthenticationUserTransformer {
 	 */
 	public function transformObjectToAuthenticationUser(stdClass $user): AuthenticationUser {
 		$authenticationUserObjectValidator = new AuthenticationUserObjectValidator();
-		$authenticationUserObjectValidator->validate($user);
+
+		try {
+			$authenticationUserObjectValidator->validate($user);
+		} catch (NestedValidationException $exception) {
+			$excpetionMessage = sprintf(
+				'User validation for %s failed because of the following reasons:',
+				self::class,
+				implode(PHP_EOL, $exception->getMessages())
+			);
+
+			throw new UserValidationFailedException($excpetionMessage);
+		}
 
 		return new AuthenticationUser(
 			$user->user_id,
