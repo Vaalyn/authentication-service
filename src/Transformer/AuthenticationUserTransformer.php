@@ -35,7 +35,7 @@ class AuthenticationUserTransformer {
 			$user->user_id,
 			$user->username,
 			$user->email,
-			(bool) $user->isAdmin
+			(bool) $user->is_admin
 		);
 	}
 }
