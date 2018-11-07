@@ -225,7 +225,9 @@ class Authentication implements AuthenticationInterface {
 				'authentication_token_id' => $authenticationTokenId,
 				'user_id'                 => $userId,
 				'token'                   => password_hash($token, PASSWORD_DEFAULT),
-				'browser'                 => $browser
+				'browser'                 => $browser,
+				'created_at'              => Carbon::now()->toDateTimeString(),
+				'updated_at'              => Carbon::now()->toDateTimeString()
 			]);
 
 		$this->session->set('authentication_token_id', $authenticationTokenId);
