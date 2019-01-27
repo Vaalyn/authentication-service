@@ -76,10 +76,10 @@ class AuthenticationMiddleware {
 			$currentRouteName
 		);
 
-		if ($routeNeedsAuthentication) {
-			if (!$this->authentication->check()) {
-				return $response->withRedirect($this->router->pathFor('login'));
-			}
+		$userIsAuthenticated = $this->authentication->check();
+
+		if ($routeNeedsAuthentication && !$userIsAuthenticated) {
+			return $response->withRedirect($this->router->pathFor('login'));
 		}
 
 		$request = $request->withAttribute(
