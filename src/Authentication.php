@@ -74,7 +74,9 @@ class Authentication implements AuthenticationInterface {
 	 */
 	public function check(): bool {
 		if (!$this->session->exists('user_id')) {
-			$this->checkLoginCookie();
+			if (!$this->checkLoginCookie()) {
+				return false;
+			}
 		}
 
 		$userExistsInDatabase = $this->databaseManager->table('user')
@@ -236,9 +238,9 @@ class Authentication implements AuthenticationInterface {
 	}
 
 	/**
-	 * @return void
+	 * @return bool
 	 */
-	protected function checkLoginCookie(): void {
+	protected function checkLoginCookie(): bool {
 		$this->invalidateAuthenticationTokens();
 
 		if (isset($_COOKIE[$this->cookieConfig['name']])) {
@@ -252,10 +254,12 @@ class Authentication implements AuthenticationInterface {
 						->set('user_id', $authenticationToken->user_id)
 						->set('authentication_token_id', $authenticationToken->authentication_token_id);
 
-					break;
+					return true;
 				}
 			}
 		}
+
+		return false;
 	}
 
 	/**
