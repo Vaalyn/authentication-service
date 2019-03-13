@@ -7,6 +7,7 @@ namespace Vaalyn\AuthenticationService\Middleware;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Http\StatusCode;
 use Slim\Interfaces\RouterInterface;
 use Vaalyn\AuthenticationService\AuthenticationInterface;
 
@@ -79,6 +80,14 @@ class AuthenticationMiddleware {
 		$userIsAuthenticated = $this->authentication->check();
 
 		if ($routeNeedsAuthentication && !$userIsAuthenticated) {
+			if ($request->isXhr()) {
+				return $response->withStatus(StatusCode::HTTP_UNAUTHORIZED)
+					->withJson([
+						'status' => 'error',
+						'message' => 'Login required'
+					]);
+			}
+
 			return $response->withRedirect($this->router->pathFor('login'));
 		}
 
