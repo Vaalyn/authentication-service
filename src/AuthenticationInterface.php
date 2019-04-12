@@ -34,6 +34,11 @@ interface AuthenticationInterface {
 	/**
 	 * @return void
 	 */
+	public function invalidateLoginCookie(): void;
+
+	/**
+	 * @return void
+	 */
 	public function invalidateAuthenticationTokens(): void;
 
 	/**

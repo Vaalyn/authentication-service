@@ -130,6 +130,22 @@ class Authentication implements AuthenticationInterface {
 	/**
 	 * @inheritDoc
 	 */
+	public function invalidateLoginCookie(): void {
+		unset($_COOKIE[$this->cookieConfig['name']]);
+		setcookie(
+			$this->cookieConfig['name'],
+			'',
+			time() - 3600,
+			'/',
+			$this->cookieConfig['domain'],
+			$this->cookieConfig['secure'],
+			$this->cookieConfig['httponly']
+		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function invalidateAuthenticationTokens(): void {
 		$invalidationDateTime = new Carbon();
 		$invalidationDateTime->subSeconds($this->cookieConfig['expire']);
@@ -158,16 +174,7 @@ class Authentication implements AuthenticationInterface {
 	 * @inheritDoc
 	 */
 	public function logout(): void {
-		unset($_COOKIE[$this->cookieConfig['name']]);
-		setcookie(
-			$this->cookieConfig['name'],
-			'',
-			time() - 3600,
-			'/',
-			$this->cookieConfig['domain'],
-			$this->cookieConfig['secure'],
-			$this->cookieConfig['httponly']
-		);
+		$this->invalidateLoginCookie();
 
 		$this->session->destroy();
 	}
