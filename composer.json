@@ -15,7 +15,7 @@
         "php": ">=7.2.0",
         "illuminate/database": "^5.7",
         "jenssegers/agent": "^2.6",
-        "nesbot/carbon": "^1.34",
+		"nesbot/carbon": "^2.0.0",
         "psr/container": "^1.0",
         "ramsey/uuid": "^3.8",
         "respect/validation": "^1.1",
@@ -23,8 +23,8 @@
         "vaalyn/session-service": "dev-master"
     },
 	"autoload": {
-        "psr-4": {
+		"psr-4": {
 			"Vaalyn\\AuthenticationService\\": "src"
-        }
-    }
+		}
+	}
 }
