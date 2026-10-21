@@ -305,6 +305,7 @@ class Authentication implements AuthenticationInterface {
 	protected function setUserPassword(int $userId, string $hashedPassword): void {
 		$this->databaseManager
 			->table('user')
+			->where('user_id', '=', $userId)
 			->update([
 				'password' => $hashedPassword
 			]);

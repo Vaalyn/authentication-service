@@ -25,7 +25,7 @@ class AuthenticationUserTransformer {
 			$excpetionMessage = sprintf(
 				'User validation for %s failed because of the following reasons: %s',
 				self::class,
-				implode(', ', $exception->getMessages())
+				$exception->getFullMessage()
 			);
 
 			throw new UserValidationFailedException($excpetionMessage);
